@@ -1,0 +1,414 @@
+/* ================================
+   Google Calendar Clone - Styles
+   ================================ */
+
+/* ---------- Color Variables ---------- */
+
+:root {
+    --primary: #3882F6;
+    --primary-light: #DBEAFE;
+    --primary-dark: #1E3A8A;
+
+    --background: #F9FAFB;
+
+    --success: #D1FAE5;
+    --success-text: #065F46;
+
+    --error: #FEE2E2;
+    --error-text: #B91C1C;
+
+    /* Additional UI variables */
+    --white: #FFFFFF;
+    --text: #333333;
+    --border: #E5E7EB;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+
+    --shadow-calendar: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    --transition-fast: 0.2s ease;
+}
+
+
+/* ---------- Global Reset ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ---------- Body ---------- */
+
+body {
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+    line-height: 1.6;
+    background-color: var(--background);
+
+    /* Makes text rendering slightly cleaner */
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* ---------- Header ---------- */
+
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+
+/* ---------- Clock ---------- */
+
+.clock-container {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    padding: 1rem;
+    text-align: center;
+
+    font-family: "Inter", sans-serif;
+    letter-spacing: 2px;
+
+    border-bottom: 2px solid var(--primary);
+
+    /* Small visual improvement */
+    user-select: none;
+}
+
+
+/* ---------- Clock - Mobile ---------- */
+
+@media (max-width: 768px) {
+
+    .clock-container {
+        font-size: 1.4rem;
+        padding: 0.75rem;
+    }
+
+}
+
+
+/* ---------- Calendar Container ---------- */
+
+.calendar {
+    max-width: 1000px;
+    margin: 2rem auto;
+
+    background-color: white;
+
+    padding: 1.5rem;
+
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-calendar);
+
+    /* Keeps the calendar from overflowing */
+    width: calc(100% - 2rem);
+}
+
+
+/* ---------- Calendar Navigation ---------- */
+
+.nav-btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 1rem;
+}
+
+
+/* ---------- Navigation Buttons ---------- */
+
+.nav-btn {
+    font-size: 1.5rem;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    color: var(--primary);
+
+    padding: 0.25rem 0.5rem;
+
+    border-radius: var(--radius-sm);
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+/* Subtle improvement without changing the original design */
+
+.nav-btn:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    transform: scale(1.04);
+}
+
+
+/* Keyboard accessibility */
+
+.nav-btn:focus-visible {
+    outline: 2px solid var(--primary-dark);
+    outline-offset: 2px;
+}
+
+
+/* ---------- Calendar Grid ---------- */
+
+.calendar-grid {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 10px;
+}
+
+
+/* ---------- Mobile Calendar Grid ---------- */
+
+@media (max-width: 1024px) {
+
+    .calendar-grid {
+        display: flex;
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        scroll-snap-type: x mandatory;
+
+        gap: 10px;
+
+        /* Smoother scrolling on mobile */
+        scroll-behavior: smooth;
+
+        /* Prevent scrollbar from affecting layout */
+        scrollbar-width: thin;
+    }
+
+    .day,
+    .day-name {
+        min-width: 140px;
+
+        flex-shrink: 0;
+
+        scroll-snap-align: start;
+    }
+}
+
+
+/* ---------- Calendar Day ---------- */
+
+.day {
+    background: #FFF;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    min-height: 100px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    position: relative;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+/* ---------- Day Hover ---------- */
+
+.day:hover {
+    background: #F3F4F6;
+
+    /* Very subtle interaction improvement */
+    border-color: #D1D5DB;
+}
+
+
+/* ---------- Today's Date ---------- */
+
+.day.today {
+    background: var(--primary-light);
+
+    border-color: var(--primary-dark);
+
+    /* Keeps today's cell visually important */
+    box-shadow: inset 0 0 0 1px rgba(30, 58, 138, 0.08);
+}
+
+
+/* ---------- Date Number ---------- */
+
+.date-number {
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+
+/* ---------- Calendar Event ---------- */
+
+.event {
+    background-color: var(--primary);
+
+    color: white;
+
+    padding: 3px 6px;
+
+    border-radius: 4px;
+
+    margin-top: 4px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+
+    /* Prevent long event names from destroying the grid */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ---------- Event Hover ---------- */
+
+.event:hover {
+    transform: scale(1.03);
+
+    /* Keeps the original blue but adds a little depth */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ---------- Event Keyboard Focus ---------- */
+
+.event:focus-visible {
+    outline: 2px solid var(--primary-dark);
+    outline-offset: 2px;
+}
+
+
+/* ---------- Alert Boxes ---------- */
+
+.alert {
+    max-width: 600px;
+
+    margin: 1rem auto;
+
+    padding: 1rem;
+
+    border-radius: 6px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+
+/* ---------- Success Alert ---------- */
+
+.success {
+    background: var(--success);
+
+    color: var(--success-text);
+}
+
+
+/* ---------- Error Alert ---------- */
+
+.error {
+    background: var(--error);
+
+    color: var(--error-text);
+}
+
+
+/* ================================
+   Responsive Improvements
+   ================================ */
+
+
+/* Tablets */
+
+@media (max-width: 768px) {
+
+    header {
+        padding: 1.5rem 1rem;
+    }
+
+    .calendar {
+        margin: 1.25rem auto;
+        padding: 1rem;
+    }
+
+}
+
+
+/* Small Phones */
+
+@media (max-width: 480px) {
+
+    .calendar {
+        width: calc(100% - 1rem);
+        padding: 0.75rem;
+    }
+
+    .day,
+    .day-name {
+        min-width: 130px;
+    }
+
+    .event {
+        font-size: 13px;
+    }
+
+}
+
+
+/* ---------- Reduced Motion ---------- */
+/* Accessibility improvement */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}
