@@ -45,6 +45,16 @@ A sleek, interactive Google Calendar clone built using web technologies to manag
   - Formats hours, minutes, and seconds as two-digit values using `padStart()`.
   - Automatically updates the digital clock every second using `setInterval()`.
   - Initializes the calendar and live clock when the JavaScript file loads.
+- **Time Slot Support:**
+  - Added **Start Time** input to the appointment form.
+  - Added **End Time** input to the appointment form.
+  - Added time input fields using HTML5 `type="time"`.
+  - Added required validation to both start and end time fields.
+  - Added dedicated event time styling through `.event .time`.
+  - Improved event layout to display course, instructor, and time information vertically.
+  - Added `.event-meta` styling for event metadata and time-related information.
+  - Improved event spacing, padding, border radius, and visual hierarchy.
+  - Added a subtle event shadow and refined hover scaling behavior.
 
 ## 🛠️ Tech Stack
 
@@ -102,6 +112,11 @@ To run this project locally, ensure you have a local server environment tool ins
 - [x] Connect calendar navigation controls to re-render previous/next months dynamically.
 - [x] Implement a real-time digital clock using JavaScript `setInterval()`.
 - [x] Initialize the calendar and live clock when the application loads.
+- [x] Add Start Time and End Time fields to the appointment form.
+- [x] Add HTML5 time input validation using type="time" and required.
+- [x] Display event time information inside calendar events.
+- [x] Improve event styling for course, instructor, and time metadata.
+- [x] Improve event spacing, padding, shadows, and hover behavior.
 
 ### 🔜 Upcoming
 
