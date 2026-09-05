@@ -1,21 +1,57 @@
 # 📅 Google Calendar Clone
 
-A sleek, interactive Google Calendar clone built using web technologies to manage and track course schedules, instructor assignments, and appointments. This project includes a persistent daily clock, a dynamic calendar grid interface, and modal menus for appointment scheduling.
+A sleek, interactive Google Calendar clone built using web technologies to manage and track course schedules, instructor assignments, and appointments. This project includes a persistent daily clock, a dynamic calendar grid interface, modal menus for appointment scheduling, and time-based appointment support.
 
 ## 🚀 Features Implemented So Far
 
 - **Semantic HTML5 Architecture:** Fully structured layout with explicit headers, sections, and container workflows.
+
 - **Live Clock Widget Layout:** Dedicated layout container (`#clock`) inside a styled, tracking clock banner (`.clock-container`) built for clean text rendering and letter-spacing.
+
 - **Dynamic Navigation UI:** Backward/forward navigation buttons equipped with smooth scaling hover animations and keyboard focus accessibility indicators.
+
 - **Responsive Calendar Layout Engine:**
   - **Desktop:** A clean 7-column CSS Grid layout managing day cells efficiently.
   - **Mobile/Tablets:** Automatic transformation into a smooth, horizontal scroll-snapping track preventing text overflow on smaller screens.
-- **Modern UI Styling System:** Uses CSS root variables for a unified blue color palette, alert box messaging statuses (success/error states), and a reduced-motion media query fallback for enhanced accessibility.
-- **Action Modals:** Centralized interactive pop-up framework for managing event operations (`#eventModal`).
+
+- **Modern UI Styling System:**
+  - Uses CSS root variables for a unified blue color palette.
+  - Includes success and error alert messaging states.
+  - Includes reduced-motion media query support for improved accessibility.
+  - Provides consistent spacing, borders, shadows, and visual hierarchy throughout the calendar interface.
+
+- **Action Modals:** Centralized interactive pop-up framework for managing event operations through `#eventModal`.
+
 - **Multi-Action Form Handling:**
-  - **Add/Edit Input Matrix:** Fields tailored for Course Title, Instructor Name, Start Date, and End Date.
-  - **Secure CRUD Routing:** Dedicated operational routing tags (`POST` method tracking actions) equipped with deletion confirmation safeguards.
-- **PHP Appointment CRUD:** Backend appointment create, update, and delete workflow implemented through the PHP layer.
+  - Add/Edit input fields for Course Title, Instructor Name, Start Date, End Date, Start Time, and End Time.
+  - Dedicated hidden fields for event IDs and form actions.
+  - Separate operational routing for add, edit, and delete actions.
+  - Deletion confirmation safeguards.
+
+- **PHP Appointment CRUD:**
+  - Implemented appointment creation using PHP prepared statements.
+  - Implemented appointment editing using PHP prepared statements.
+  - Implemented appointment deletion using PHP prepared statements.
+  - Added success messages for add, edit, and delete operations.
+  - Added error handling through query-string status messages.
+  - Added input trimming and basic required-field validation.
+  - Uses `bind_param()` for parameterized database operations.
+
+- **Database Time Support:**
+  - Added `start_time` column to the `appointments` table.
+  - Added `end_time` column to the `appointments` table.
+  - Both columns use the MySQL `TIME` data type.
+  - Time columns are integrated into appointment INSERT operations.
+  - Time columns are integrated into appointment UPDATE operations.
+  - Time values are retrieved when appointments are fetched from MySQL.
+
+- **PHP Date-Range Event Expansion:**
+  - Fetches appointments from the `appointments` table.
+  - Converts appointment start and end dates into `DateTime` objects.
+  - Expands multi-day appointments into individual calendar events.
+  - Generates one calendar event for each date between the appointment start and end dates.
+  - Preserves the original appointment ID, title, start date, end date, start time, and end time for each generated event.
+
 - **JavaScript Calendar Rendering & Interaction Logic:**
   - Dynamically calculates the selected month's total number of days.
   - Calculates the weekday on which the month begins and creates the required leading blank cells.
@@ -27,11 +63,15 @@ A sleek, interactive Google Calendar clone built using web technologies to manag
   - Dynamically creates event containers for course, instructor, and time information.
   - Displays course names and instructor names from stored event data.
   - Displays event start and end times inside each calendar event.
+  - Reads `start_time` and `end_time` values supplied by the PHP backend.
+  - Displays formatted event time information directly inside each calendar event.
+  - Uses dynamically generated event objects to keep date and time information together.
   - Adds interactive `+ Add` buttons to individual calendar days.
   - Adds `Edit` buttons to calendar days containing existing events.
   - Prevents overlay button clicks from triggering unwanted parent-cell interactions using `stopPropagation()`.
   - Implements an Add Event modal workflow with default form values.
   - Automatically assigns the selected calendar date to the start and end date fields when adding an event.
+  - Provides default start and end times when creating a new appointment.
   - Implements an Edit Event modal workflow for existing appointments.
   - Dynamically generates an event selector when multiple events exist on the same date.
   - Stores complete event objects inside dynamically generated selector options using `JSON.stringify()`.
@@ -45,16 +85,21 @@ A sleek, interactive Google Calendar clone built using web technologies to manag
   - Formats hours, minutes, and seconds as two-digit values using `padStart()`.
   - Automatically updates the digital clock every second using `setInterval()`.
   - Initializes the calendar and live clock when the JavaScript file loads.
-- **Time Slot Support:**
-  - Added **Start Time** input to the appointment form.
-  - Added **End Time** input to the appointment form.
-  - Added time input fields using HTML5 `type="time"`.
-  - Added required validation to both start and end time fields.
-  - Added dedicated event time styling through `.event .time`.
-  - Improved event layout to display course, instructor, and time information vertically.
-  - Added `.event-meta` styling for event metadata and time-related information.
-  - Improved event spacing, padding, border radius, and visual hierarchy.
-  - Added a subtle event shadow and refined hover scaling behavior.
+
+## ⏰ Time Slot Support
+
+- Added **Start Time** input to the appointment form.
+- Added **End Time** input to the appointment form.
+- Added time input fields using HTML5 `type="time"`.
+- Added required validation to both start and end time fields.
+- Added dedicated event time styling through `.event .time`.
+- Improved event layout to display course, instructor, and time information vertically.
+- Added `.event-meta` styling for event metadata and time-related information.
+- Improved event spacing, padding, border radius, and visual hierarchy.
+- Added a subtle event shadow and refined hover scaling behavior.
+- Stores appointment start and end times in MySQL using the `TIME` datatype.
+- Transfers stored time values from PHP to JavaScript through the generated event data.
+- Displays the time range alongside the course and instructor information in calendar events.
 
 ## 🛠️ Tech Stack
 
@@ -62,18 +107,21 @@ A sleek, interactive Google Calendar clone built using web technologies to manag
 - **Backend:** PHP (`index.php`, appointment CRUD logic, and database connection).
 - **Database:** MySQL for persistent appointment storage.
 
+Replace that entire structure with:
+
+`````markdown
 ## 📂 Project Structure
 
-```text
-├── index.php         # Main view file containing layout grid structure and action modals
-├── style.css         # Complete document stylesheet featuring variables, grid systems, and responsiveness
-├── script.js         # Dynamic calendar rendering and interactive event logic
-├── connection.php    # MySQL database connection
-├── calendar.php      # PHP calendar/appointment backend logic
+````text
+├── index.php             # Main view file containing calendar layout and appointment modal
+├── style.css             # Complete document stylesheet with responsive calendar and event styling
+├── script.js             # Dynamic calendar rendering, navigation, event display, and modal interaction
+├── connection.php        # MySQL database connection
+├── calendar.php          # PHP appointment CRUD and database event retrieval logic
 ├── mysql-scripts/
-│   └── 1-schema.sql  # Database schema
-└── README.md         # Project documentation
-```
+│   ├── 1-schema.sql      # Initial database and appointments table schema
+│   └── 2-alter-table.sql # Adds Start Time and End Time columns to appointments
+└── README.md             # Project documentation
 
 ## ⚙️ Installation & Local Setup
 
@@ -83,7 +131,10 @@ To run this project locally, ensure you have a local server environment tool ins
 
    ```bash
    git clone https://github.com
-   ```
+````
+`````
+
+````
 
 2. Start your Apache server module and MySQL service.
 
@@ -117,15 +168,20 @@ To run this project locally, ensure you have a local server environment tool ins
 - [x] Display event time information inside calendar events.
 - [x] Improve event styling for course, instructor, and time metadata.
 - [x] Improve event spacing, padding, shadows, and hover behavior.
+- [x] Add `start_time` and `end_time` columns to the MySQL `appointments` table.
+- [x] Create `2-alter-table.sql` for the appointment time column changes.
+- [x] Update PHP appointment INSERT logic to save start and end times.
+- [x] Update PHP appointment UPDATE logic to modify start and end times.
+- [x] Update PHP appointment retrieval logic to include start and end times.
+- [x] Pass appointment time data from PHP to JavaScript.
+- [x] Render appointment time ranges dynamically inside calendar events.
+- [x] Populate Start Time and End Time fields when editing an existing appointment.
 
 ### 🔜 Upcoming
 
-- [ ] Connect the JavaScript event interactions fully with the PHP/MySQL CRUD workflow.
-- [ ] Add and test event creation from the JavaScript modal.
-- [ ] Add and test event editing from the JavaScript modal.
-- [ ] Add and test event deletion from the JavaScript interface.
 - [ ] Add event selector change handling for selecting different events on the same date.
 - [ ] Refine modal styling (`.modal`) using clean backdrop filters and fixed positioning.
 - [ ] Add stronger JavaScript validation for event fields and date/time inputs.
 - [ ] Test calendar behavior across different months, years, and edge cases.
 - [ ] Polish responsive behavior and overall user interaction.
+````
